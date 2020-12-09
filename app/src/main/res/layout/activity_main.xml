@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/home_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--<ImageView
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/home_bg"
+        android:scaleType="centerCrop"/>-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/view_need_offset"
+        tools:context=".MainActivity">
+        <include
+            android:id="@+id/main_title_bar"
+            layout="@layout/main_title_bar" />
+        <!-- 当前天气概述 start-->
+        <TextView
+            android:id="@+id/main_current_temperature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="50dp"
+            android:text="20"
+            android:textColor="@color/colorWhite0"
+            android:textSize="100sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_title_bar"
+            tools:text="20" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="°C"
+            android:textColor="@color/colorWhite0"
+            android:textSize="55sp"
+            app:layout_constraintLeft_toRightOf="@id/main_current_temperature"
+            app:layout_constraintTop_toTopOf="@id/main_current_temperature"
+            tools:text="°C" />
+
+        <TextView
+            android:id="@+id/main_current_temperature_sensible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/btn_sensible_temp"
+            android:text="体感:15°C"
+            android:textColor="@color/colorWhite0"
+            android:textSize="16sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/main_current_temperature"
+            app:layout_constraintLeft_toRightOf="@id/main_current_temperature"
+            tools:text="体感温度:15°C" />
+        <!-- 天气 -> 气温范围  -->
+        <TextView
+            android:id="@+id/main_current_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/title_bar_margin_right"
+            android:text="10月23日星期五"
+            android:gravity="center"
+            android:textColor="@color/colorWhite0"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_current_temperature"
+            tools:text="10月23日星期五" />
+
+        <TextView
+            android:id="@+id/main_temperature_range"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:text="18~25℃"
+            android:textColor="@color/colorWhite0"
+            app:layout_constraintBaseline_toBaselineOf="@id/main_current_date"
+            app:layout_constraintRight_toLeftOf="@id/main_current_date"
+            tools:text="18~25℃" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/home_poto_tep"
+            app:layout_constraintBottom_toBottomOf="@id/main_current_date"
+            app:layout_constraintRight_toLeftOf="@id/main_temperature_range" />
+
+        <ImageView
+            android:id="@+id/test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/title_bar_margin_left"
+            android:src="@drawable/home_poto_decoration"
+            app:layout_constraintBottom_toBottomOf="@id/main_current_date"
+            app:layout_constraintLeft_toLeftOf="parent" />
+        <!-- 天气 湿度信息 -->
+        <LinearLayout
+            android:id="@+id/main_wet_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="@dimen/title_bar_margin_left"
+            android:layout_marginRight="@dimen/title_bar_margin_right"
+            android:background="@drawable/btn_main_temp_info"
+            android:orientation="horizontal"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_current_date">
+
+            <TextView
+                android:id="@+id/main_wet"
+                style="@style/Text_Wrap_Wrap_White"
+                android:layout_marginLeft="@dimen/title_bar_margin_left"
+                android:drawableLeft="@drawable/home_poto_wet"
+                android:text="湿度 70%"
+                tools:text="湿度 70%" />
+
+            <Space style="@style/MainSpaceH" />
+
+            <TextView
+                android:id="@+id/main_wind"
+                style="@style/Text_Wrap_Wrap_White"
+                android:drawableLeft="@drawable/home_poto_wind"
+                android:text="东风 1级"
+                tools:text="东风 1级" />
+
+            <Space style="@style/MainSpaceH" />
+
+            <TextView
+                style="@style/Text_Wrap_Wrap_White"
+                android:drawableLeft="@drawable/home_poto_air"
+                android:text="AIQ"
+                tools:text="AIQ" />
+
+            <TextView
+                android:id="@+id/main_air"
+                style="@style/Text_Wrap_Wrap_White"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="@dimen/title_bar_margin_right"
+                android:background="@drawable/btn_air_bg"
+                android:padding="2dp"
+                android:text="轻度"
+                tools:text="轻度" />
+        </LinearLayout>
+        <!-- 当前天气概述 end-->
+        <!-- 未来天气start -->
+        <TableLayout
+            android:id="@+id/main_future_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/title_bar_margin_left"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/btn_main_temp_info"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/main_future_notice"
+            app:layout_constraintTop_toBottomOf="@id/main_wet_container">
+
+            <TextView
+                style="@style/Text_Wrap_Wrap_White_Center"
+                android:text="今日天气变化预览" />
+
+            <TableRow>
+
+                <TextView
+                    style="@style/Text_Wrap_Wrap_White_Center"
+                    android:text="2小时" />
+
+                <TextView
+                    android:id="@+id/hourly_2"
+                    style="@style/Text_Wrap_Wrap_White_Center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="12~19℃" />
+
+                <ImageView
+                    android:id="@+id/hourly2_weather_type"
+                    style="@style/ImageViewBase"
+                    android:src="@drawable/weather_icon_sunny" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    style="@style/Text_Wrap_Wrap_White_Center"
+                    android:text="12小时" />
+
+                <TextView
+                    android:id="@+id/hourly_12"
+                    style="@style/Text_Wrap_Wrap_White_Center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="18~24℃" />
+
+                <ImageView
+                    android:id="@+id/hourly12_weather_type"
+                    style="@style/ImageViewBase"
+                    android:src="@drawable/weather_icon_sunny" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    style="@style/Text_Wrap_Wrap_White_Center"
+                    android:text="24小时" />
+
+                <TextView
+                    android:id="@+id/hourly_24"
+                    style="@style/Text_Wrap_Wrap_White_Center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="5~19℃" />
+
+                <ImageView
+                    android:id="@+id/hourly24_weather_type"
+                    style="@style/ImageViewBase"
+                    android:src="@drawable/weather_icon_tornado" />
+            </TableRow>
+        </TableLayout>
+
+        <TextView
+            android:id="@+id/main_future_notice"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:paddingTop="20dp"
+            android:textColor="@color/colorWhite0"
+            android:layout_marginRight="@dimen/title_bar_margin_right"
+            android:background="@drawable/btn_main_temp_info"
+            android:drawableTop="@drawable/home_bottom_btn_notic"
+            android:gravity="center"
+            android:text="@string/main_action_notice_2"
+            app:layout_constraintBottom_toBottomOf="@id/main_future_container"
+            app:layout_constraintLeft_toRightOf="@id/main_future_container"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/main_future_container" />
+        <!-- 未来天气end -->
+        <!-- 未来天气 24小时 start-->
+        <LinearLayout
+            android:id="@+id/future_24_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/title_bar_margin_left"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="@dimen/title_bar_margin_right"
+            android:background="@drawable/btn_main_24_forecast_bg"
+            android:orientation="vertical"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_future_container">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorBlue"
+                android:text="24小时天气变化" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/main_24_weather_recycler_view"
+                android:layout_width="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:orientation="horizontal"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        <!-- 未来天气 24小时 end-->
+        <TableLayout
+            android:id="@+id/main_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/title_bar_margin_left"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="@dimen/title_bar_margin_right"
+            android:background="@drawable/btn_main_24_forecast_bg"
+            android:paddingTop="30dp"
+            android:paddingBottom="30dp"
+            android:layout_marginBottom="30dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/future_24_container">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/main_content_rain"
+                    style="@style/MainTabText"
+                    android:layout_marginLeft="@dimen/title_bar_margin_left"
+                    android:drawableTop="@drawable/home_bottom_btn_rainfall"
+                    android:text="@string/main_rain_air_pressure" />
+
+                <Space style="@style/MainSpaceH" />
+
+                <TextView
+                    android:id="@+id/main_action_notice"
+                    style="@style/MainTabText"
+                    android:drawableTop="@drawable/home_bottom_btn_notic"
+                    android:text="@string/main_action_notice" />
+
+                <Space style="@style/MainSpaceH" />
+
+                <TextView
+                    android:id="@+id/main_wave_temp"
+                    style="@style/MainTabText"
+                    android:drawableTop="@drawable/home_bottom_btn_waves"
+                    android:text="@string/main_wave_temperature" />
+
+                <Space style="@style/MainSpaceH" />
+
+                <TextView
+                    android:id="@+id/main_typhoon"
+                    style="@style/MainTabText"
+                    android:layout_marginRight="@dimen/title_bar_margin_right"
+                    android:drawableTop="@drawable/home_bottom_btn_typhoon"
+                    android:text="@string/main_typhoon" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/main_tide"
+                    style="@style/MainTabText"
+                    android:layout_marginLeft="@dimen/title_bar_margin_left"
+                    android:drawableTop="@drawable/home_bottom_btn_tides"
+                    android:text="@string/main_tide" />
+
+                <Space style="@style/MainSpaceH" />
+
+                <TextView
+                    android:id="@+id/main_unusual_weather"
+                    style="@style/MainTabText"
+                    android:drawableTop="@drawable/home_bottom_btn_weather"
+                    android:text="@string/main_unusual_weather" />
+
+                <Space style="@style/MainSpaceH" />
+
+                <TextView
+                    android:id="@+id/main_fishery_info"
+                    style="@style/MainTabText"
+                    android:drawableTop="@drawable/home_bottom_btn_fisheries"
+                    android:text="@string/main_fishery_info" />
+
+                <Space style="@style/MainSpaceH" />
+
+                <TextView
+                    android:id="@+id/main_save"
+                    style="@style/MainTabText"
+                    android:layout_marginRight="@dimen/title_bar_margin_right"
+                    android:drawableTop="@drawable/home_bottom_btn_rescue"
+                    android:text="@string/main_save" />
+            </TableRow>
+        </TableLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

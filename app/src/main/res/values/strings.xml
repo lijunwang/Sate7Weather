@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Sate7Weather</string>
+    <string name="main_rain_air_pressure">降雨气压</string>
+    <string name="main_action_notice">出船公告</string>
+    <string name="main_action_notice_2">出船公告\nannouncement</string>
+    <string name="main_wave_temperature">海浪水温</string>
+    <string name="main_typhoon">大风台风</string>
+    <string name="main_tide">潮汐礁石</string>
+    <string name="main_unusual_weather">异常天气</string>
+    <string name="main_fishery_info">渔业信息</string>
+    <string name="main_save">港口救援</string>
+    <string name="temperature_sensible">体感:%.1f°C</string>
+    <string name="hourly_temperature">%d~%d℃</string>
+    <string name="cancel">取消</string>
+    <string name="ok">更新</string>
+    <string name="pgy_update_title">有新版本啦</string>
+    <string name="pgy_update_msg">本次更新以下问题:%s</string>
+</resources>

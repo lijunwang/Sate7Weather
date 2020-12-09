@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="hourlyWeatherInfo"
+            type="com.wlj.sate7weather.bean.HourlyWeather" />
+    </data>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/rv_hourly_time"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@{hourlyWeatherInfo.hour}"
+        tools:text = "24H"/>
+    <ImageView
+        android:id="@+id/rv_hourly_weatherType"
+        android:src="@drawable/weather_icon_sunny"
+        style="@style/ImageViewBase"/>
+    <TextView
+        android:id="@+id/rv_hourly_high_temp"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@{hourlyWeatherInfo.temperature}"
+        tools:text="28℃"/>
+    <View
+        android:layout_width="3dp"
+        android:layout_gravity="center"
+        android:background="@color/colorPrimaryDark"
+        android:layout_height="50dp"/>
+    <TextView
+        android:id="@+id/rv_hourly_low_temp"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="@{hourlyWeatherInfo.temperature}"
+        android:gravity="center"
+        tools:text="26℃"/>
+</LinearLayout>
+</layout>
