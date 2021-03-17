@@ -4,38 +4,59 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 这个权限用于进行网络定位 -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" /> <!-- 这个权限用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
-
     <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!-- 允许程序录制音频 -->
-    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.GET_TASKS" /> <!-- TO delete -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:name=".WeatherApp"
         android:allowBackup="true"
         android:icon="@mipmap/logo"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TestActivity" android:theme="@style/Immerse"/>
+        <activity android:name=".AboutMeActivity"
+            android:theme="@style/CustomTheme"></activity>
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/Immerse">
+        </activity>
+        <activity
+            android:name=".TideActivity"
+            android:theme="@style/Immerse" />
+        <activity
+            android:name=".NoticeActivity"
+            android:theme="@style/Immerse" />
+        <activity
+            android:name=".TyphoonActivity"
+            android:theme="@style/Immerse" />
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="g4fmSCytveq3h409ao3FigR2G7ksuIhg"/>
-        <!--<provider
+            android:value="g4fmSCytveq3h409ao3FigR2G7ksuIhg" />
+        <!--
+<provider
             android:name="com.pgyersdk.PgyerProvider"
             android:authorities="$com.wlj.sate7weather.com.pgyer.provider"
-            android:exported="false"/>-->
+            android:exported="false"/>
+        -->
         <meta-data
             android:name="PGYER_APPID"
-            android:value="33efe66496e6065430898d72dd5b5329" >
-        </meta-data>
+            android:value="33efe66496e6065430898d72dd5b5329" />
+
         <activity
             android:name=".MainActivity"
             android:theme="@style/Immerse">

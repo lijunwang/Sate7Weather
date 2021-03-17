@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">Sate7Weather</string>
     <string name="main_rain_air_pressure">降雨气压</string>
-    <string name="main_action_notice">出船公告</string>
-    <string name="main_action_notice_2">出船公告\nannouncement</string>
+    <string name="main_action_notice">气象预警</string>
+    <string name="main_action_notice_2">气象预警\nannouncement</string>
     <string name="main_wave_temperature">海浪水温</string>
     <string name="main_typhoon">大风台风</string>
-    <string name="main_tide">潮汐礁石</string>
+    <string name="main_tide">潮汐站点</string>
     <string name="main_unusual_weather">异常天气</string>
     <string name="main_fishery_info">渔业信息</string>
     <string name="main_save">港口救援</string>
@@ -15,4 +15,18 @@
     <string name="ok">更新</string>
     <string name="pgy_update_title">有新版本啦</string>
     <string name="pgy_update_msg">本次更新以下问题:%s</string>
+    <string name="typhoon_empty">当前没有台风信息...</string>
+    <string name="title_typhoon">大风台风</string>
+    <string name="search">请输入关键字查询</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="current_phone">当前手机号(可用于登录)</string>
+    <string name="current_phone_real">152****5245</string>
 </resources>

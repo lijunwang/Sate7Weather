@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorGray"
+    tools:context=".AboutMeActivity">
+    <EditText
+        android:id="@+id/nickNameET"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp"
+        android:hint="点击输入昵称"
+        android:gravity="left|top"
+        android:background="@drawable/btn_me_bg"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <Button
+        android:id="@+id/nameChange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/nickNameET"
+        android:layout_marginTop="68dp"
+        android:textColor="#2077F7"
+        android:paddingLeft="100dp"
+        android:paddingRight="100dp"
+        android:background="@drawable/btn_me_bg_exit"
+        android:text="确认修改"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

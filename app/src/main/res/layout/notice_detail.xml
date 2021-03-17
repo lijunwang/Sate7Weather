@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="noticeDetailBean"
+            type="com.wlj.sate7weather.bean.WeatherAlarmBean" />
+    </data>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <TextView
+        android:id="@+id/noticeDetailTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center_horizontal"
+        android:textColor="@color/red"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:singleLine="true"
+        android:marqueeRepeatLimit="marquee_forever"
+        tools:text = "内蒙古自治区气象台发布大风蓝色预警"
+        notice__detail_title="@{noticeDetailBean}"/>
+    <TextView
+        android:id="@+id/noticeDetailLevel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/noticeDetailTitle"
+        android:gravity="center_horizontal"
+        android:textColor="@color/red"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:maxLines="2"
+        tools:text = "II级/严重"
+        notice__detail_level="@{noticeDetailBean}"/>
+    <TextView
+        android:id="@+id/noticeDetailTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorBlack0"
+        notice__detail_time="@{noticeDetailBean}"
+        android:gravity="center_horizontal"
+        tools:text = "发布时间:2021年1月29日10:25:47"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/noticeDetailLevel"/>
+    <TextView
+        android:id="@+id/noticeDetailDescription"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="@{noticeDetailBean.description}"
+        android:textColor="@color/colorBlack0"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/noticeDetailTime"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="dev_ok_rain" type="bool">true</item>
+    <item name="dev_ok_alarm" type="bool">true</item>
+    <item name="dev_ok_wave" type="bool">false</item>
+    <item name="dev_ok_typhoon" type="bool">true</item>
+    <item name="dev_ok_tide" type="bool">true</item>
+    <item name="dev_ok_abnormal_weather" type="bool">false</item>
+    <item name="dev_ok_fishery_information" type="bool">false</item>
+    <item name="dev_ok_sos" type="bool">false</item>
+</resources>

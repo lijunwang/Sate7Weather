@@ -1,6 +1,8 @@
 package com.wlj.sate7weather
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
@@ -20,7 +22,7 @@ import com.yanzhenjie.permission.runtime.Permission
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_title_bar.*
 
-
+const val REQ_CODE_PERMISSION = 123
 class MainActivity : AppCompatActivity(){
     private lateinit var weatherViewModel: WeatherInfoViewModel
     private lateinit var weatherDao: WeatherDao
@@ -28,6 +30,13 @@ class MainActivity : AppCompatActivity(){
     private lateinit var bdLocationHelper:BDLocationHelp
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        /*val token:String = getToke(this)
+        val fromLogin = intent.getBooleanExtra("fromLogin",false)
+        log("MainActivity onCreate token == $token,from login == $fromLogin")
+        if(token.isEmpty() && !fromLogin){
+            startActivity(Intent(this,LoginActivity::class.java))
+            finish()
+        }*/
         setContentView(R.layout.activity_main)
         weatherViewModel =  ViewModelProviders.of(this).get(WeatherInfoViewModel::class.java)
         bdLocationHelper = BDLocationHelp.getInstance(this)
@@ -41,45 +50,12 @@ class MainActivity : AppCompatActivity(){
         requestLocationPermission()
         StatusBarUtil.setTranslucentForImageView(this, 0, findViewById(R.id.view_need_offset))
         appUpdate()
+        setClicks()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         PgyUpdateManager.unRegister()
-    }
-    private fun requestLocationPermission(){
-        AndPermission.with(this)
-            .runtime()
-            .permission(Permission.Group.LOCATION,Permission.Group.STORAGE)
-            .onGranted(Action { it ->
-                log("获得的权限：$it")
-                bdLocationHelper.startLocate(false) { location ->
-                    //location success
-                    logLiveWeather("get location result: " + location?.addrStr)
-                    location?.let {
-                        location
-                        logLiveWeather("get location success to get live data by longitude-latitude " + it.district)
-                        //Jetpack数据驱动UI第二步: 请求数据
-                        weatherViewModel.getLiveWeather(
-                            "" + location.longitude,
-                            "" + location.latitude
-                        )
-                        weatherViewModel.getAQI("" + location.longitude, "" + location.latitude)
-                        weatherViewModel.getFuture24Weather(location, weatherDao)
-                        weatherViewModel.getWeatherRange(location.city)
-                        bdLocationHelper.stopLocate()//防止重复拉取数据
-                        //更新状态栏
-                        main_titlebar_title.text = it.district
-                    }
-                }
-            })
-            .onDenied(Action {
-                log("被拒绝的权限：$it")
-                if (AndPermission.hasAlwaysDeniedPermission(this, it)) {
-                    //show dialog
-                }
-            })
-            .start()
     }
     private fun observeWeatherChange(){
         //实时天气详情变化
@@ -160,13 +136,18 @@ class MainActivity : AppCompatActivity(){
                     appBean?.let {
                         AlertDialog.Builder(this@MainActivity)
                             .setTitle(R.string.pgy_update_title)
-                            .setMessage(resources.getString(R.string.pgy_update_msg,appBean.releaseNote))
-                            .setNegativeButton(R.string.cancel
+                            .setMessage(
+                                resources.getString(
+                                    R.string.pgy_update_msg,
+                                    appBean.releaseNote
+                                )
+                            )
+                            .setNegativeButton(
+                                R.string.cancel
                             ) { dialog, _ ->
                                 dialog.dismiss()
                             }
-                            .setPositiveButton(R.string.ok){
-                                    _,_ ->
+                            .setPositiveButton(R.string.ok) { _, _ ->
                                 PgyUpdateManager.downLoadApk(appBean.downloadURL)
                             }
                             .show()
@@ -189,4 +170,111 @@ class MainActivity : AppCompatActivity(){
             })*/
             .register()
     }
+
+    private fun setClicks(){
+        main_typhoon.setOnClickListener{
+            startActivity(Intent(this,TyphoonActivity::class.java))
+        }
+        main_action_notice.setOnClickListener{
+            startActivity(Intent(this,NoticeActivity::class.java))
+        }
+        main_future_notice.setOnClickListener{
+            startActivity(Intent(this,NoticeActivity::class.java))
+        }
+        main_tide.setOnClickListener{
+            startActivity(Intent(this,TideActivity::class.java))
+        }
+        main_titlebar_locate.setOnClickListener{
+            if(getToke(this).isEmpty()){
+                startActivity(Intent(this,LoginActivity::class.java))
+            }else{
+                startActivity(Intent(this,AboutMeActivity::class.java))
+            }
+        }
+
+    }
+//==============================================权限处理 START==============================================
+    private lateinit var permissionExplainDialog:AlertDialog
+    private fun requestLocationPermission(){
+        AndPermission.with(this)
+            .runtime()
+            .permission(Permission.ACCESS_FINE_LOCATION, Permission.WRITE_EXTERNAL_STORAGE,Permission.READ_EXTERNAL_STORAGE)
+            .onGranted(Action { it ->
+                logPermission("onGranted ...：$it")
+                onLocationPermissionGranted()
+            })
+            .rationale { _, data, executor ->
+                logPermission("rationale ... $data")
+                val explainWhy = StringBuilder()
+                if (data.contains(Permission.ACCESS_FINE_LOCATION)){
+
+                }else if(data.contains(Permission.ACCESS_FINE_LOCATION)){
+
+                }
+                executor.execute()
+            }
+            .onDenied(Action {
+                if (AndPermission.hasAlwaysDeniedPermission(this, it)) {
+                    //show dialog
+                    logPermission("onDenied always: $it")//弹框解释
+                    AlertDialog.Builder(this).setPositiveButton("设置"
+                    ) { _, _ ->
+                        toSettingRequestPermission(this)
+                    }.setNegativeButton("取消"){
+                        _,_->
+                        finish()
+                    }.setTitle("权限请求").setMessage("需要相关权限，以便获取当前设备的位置信息、进行版本更新。是否去设置中赋予权限?").show()
+
+                } else {
+                    logPermission("onDenied:$it")//重新去请求
+                    requestLocationPermission()
+                }
+            })
+            .start()
+    }
+
+
+    //权限处理回调;
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode){
+            REQ_CODE_PERMISSION -> {
+                if (AndPermission.hasPermissions(this, Permission.ACCESS_FINE_LOCATION)) {
+                    onLocationPermissionGranted()
+                } else {
+                    Toast.makeText(this, "缺乏定位权限，App就无法更新天气信息", Toast.LENGTH_SHORT).show()
+                }
+
+                if (!AndPermission.hasPermissions(this, Permission.WRITE_EXTERNAL_STORAGE)) {
+                    Toast.makeText(this, "缺乏读写存储卡权限，应用将无法及时更新", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    //获得定位权限后
+    private fun onLocationPermissionGranted(){
+        logPermission("得到了定位权限 ... ")
+        bdLocationHelper.startLocate(false) { location ->
+            //location success
+            logLiveWeather("get location result: " + location?.addrStr)
+            location?.let {
+                location
+                logLiveWeather("get location success to get live data by longitude-latitude " + it.district)
+                //Jetpack数据驱动UI第二步: 请求数据
+                weatherViewModel.getLiveWeather(
+                    getToke(this),
+                    "" + location.longitude,
+                    "" + location.latitude
+                )
+                weatherViewModel.getAQI(this,"" + location.longitude, "" + location.latitude)
+                weatherViewModel.getFuture24Weather(this,location, weatherDao)
+                weatherViewModel.getWeatherRange(this,location.city)
+                bdLocationHelper.stopLocate()//防止重复拉取数据
+                //更新状态栏
+                main_titlebar_title.text = it.district
+            }
+        }
+    }
+//==============================================权限处理 END==============================================
 }

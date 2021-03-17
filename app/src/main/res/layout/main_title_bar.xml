@@ -20,6 +20,7 @@
         android:textSize="18sp"
         android:textColor="@color/colorWhite0"
         android:text="@string/app_name"
+        android:drawableRight="@drawable/home_nav_icon_refresh"
         tools:text="北京市朝阳区"/>
     <ImageView
         android:id="@+id/main_titlebar_locate"
@@ -28,5 +29,5 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/title_bar_margin_right"
-        android:src="@drawable/home_nav_icon_refresh"/>
+        android:src="@drawable/home_mine"/>
 </RelativeLayout>

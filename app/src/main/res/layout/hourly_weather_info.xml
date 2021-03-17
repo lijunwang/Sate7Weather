@@ -27,19 +27,21 @@
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@{hourlyWeatherInfo.temperature}"
+        temperature="@{hourlyWeatherInfo}"
         tools:text="28℃"/>
     <View
         android:layout_width="3dp"
         android:layout_gravity="center"
         android:background="@color/colorPrimaryDark"
+        android:visibility="gone"
         android:layout_height="50dp"/>
     <TextView
         android:id="@+id/rv_hourly_low_temp"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:text="@{hourlyWeatherInfo.temperature}"
+        temperature="@{hourlyWeatherInfo}"
         android:gravity="center"
+        android:visibility="gone"
         tools:text="26℃"/>
 </LinearLayout>
 </layout>

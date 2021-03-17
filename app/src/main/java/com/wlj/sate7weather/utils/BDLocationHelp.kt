@@ -5,7 +5,17 @@ import com.baidu.location.BDAbstractLocationListener
 import com.baidu.location.BDLocation
 import com.baidu.location.LocationClient
 import com.baidu.location.LocationClientOption
+import com.baidu.mapapi.map.BaiduMap
+import com.baidu.mapapi.map.BitmapDescriptorFactory
+import com.baidu.mapapi.map.MarkerOptions
+import com.baidu.mapapi.map.Overlay
+import com.baidu.mapapi.model.LatLng
 
+fun BaiduMap.addMark(iconId:Int,location: BDLocation): Overlay {
+    val option = MarkerOptions().icon(BitmapDescriptorFactory.fromResource(iconId))
+        .position(LatLng(location.latitude,location.longitude))
+    return addOverlay(option)
+}
 class BDLocationHelp {
     private var locationClient:LocationClient
     private val locationOption: LocationClientOption = LocationClientOption()
@@ -66,9 +76,9 @@ class BDLocationHelp {
             return INSTANCE!!
         }
     }
-    fun startLocate(once: Boolean,actionAfterLocate: (location: BDLocation?) -> Unit) {
+    fun startLocate(once: Boolean, actionAfterLocate: (location: BDLocation?) -> Unit) {
         log("start locate $once")
-        myLocationListener.setAction(once,actionAfterLocate)
+        myLocationListener.setAction(once, actionAfterLocate)
         locationClient.registerLocationListener(myLocationListener)
         locationClient.start()
     }
@@ -81,9 +91,9 @@ class BDLocationHelp {
     }
 }
 class MyLocationListener(private val help: BDLocationHelp): BDAbstractLocationListener() {
-    private lateinit var action:(location: BDLocation?)->Unit
+    private lateinit var action: (location: BDLocation?)->Unit
     private var once: Boolean = false
-    fun setAction(once:Boolean,doAction: (location: BDLocation?) -> Unit){
+    fun setAction(once: Boolean, doAction: (location: BDLocation?) -> Unit){
         action = doAction
         this.once = once
     }

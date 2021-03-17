@@ -5,12 +5,6 @@
     android:background="@drawable/home_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <!--<ImageView
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/home_bg"
-        android:scaleType="centerCrop"/>-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -155,6 +149,8 @@
             android:layout_marginLeft="@dimen/title_bar_margin_left"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:background="@drawable/btn_main_temp_info"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/main_future_notice"
@@ -230,7 +226,7 @@
             android:textColor="@color/colorWhite0"
             android:layout_marginRight="@dimen/title_bar_margin_right"
             android:background="@drawable/btn_main_temp_info"
-            android:drawableTop="@drawable/home_bottom_btn_notic"
+            android:drawableTop="@drawable/home_top_btn_notic_old"
             android:gravity="center"
             android:text="@string/main_action_notice_2"
             app:layout_constraintBottom_toBottomOf="@id/main_future_container"
@@ -286,6 +282,7 @@
                 <TextView
                     android:id="@+id/main_content_rain"
                     style="@style/MainTabText"
+                    android:visibility="gone"
                     android:layout_marginLeft="@dimen/title_bar_margin_left"
                     android:drawableTop="@drawable/home_bottom_btn_rainfall"
                     android:text="@string/main_rain_air_pressure" />
@@ -301,10 +298,10 @@
                 <Space style="@style/MainSpaceH" />
 
                 <TextView
-                    android:id="@+id/main_wave_temp"
+                    android:id="@+id/main_tide"
                     style="@style/MainTabText"
-                    android:drawableTop="@drawable/home_bottom_btn_waves"
-                    android:text="@string/main_wave_temperature" />
+                    android:drawableTop="@drawable/home_bottom_btn_tides"
+                    android:text="@string/main_tide" />
 
                 <Space style="@style/MainSpaceH" />
 
@@ -319,14 +316,15 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_marginTop="10dp">
 
                 <TextView
-                    android:id="@+id/main_tide"
+                    android:id="@+id/main_wave_temp"
                     style="@style/MainTabText"
                     android:layout_marginLeft="@dimen/title_bar_margin_left"
                     android:drawableTop="@drawable/home_bottom_btn_tides"
-                    android:text="@string/main_tide" />
+                    android:text="@string/main_wave_temperature" />
 
                 <Space style="@style/MainSpaceH" />
 

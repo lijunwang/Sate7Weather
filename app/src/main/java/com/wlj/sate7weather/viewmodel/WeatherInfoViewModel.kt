@@ -1,5 +1,6 @@
 package com.wlj.sate7weather.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,6 +8,7 @@ import com.baidu.location.BDLocation
 import com.wlj.sate7weather.bean.*
 import com.wlj.sate7weather.db.WeatherDao
 import com.wlj.sate7weather.server.ServerAPI
+import com.wlj.sate7weather.utils.getToke
 import com.wlj.sate7weather.utils.log
 import com.wlj.sate7weather.utils.loge
 import kotlinx.coroutines.Dispatchers.IO
@@ -19,9 +21,9 @@ class WeatherInfoViewModel:ViewModel(){
     var future24Weather:MutableLiveData<List<HourlyWeather>> = MutableLiveData()
     var temperatureRange:MutableLiveData<List<Int>> = MutableLiveData()
     val aqi:MutableLiveData<AQI> = MutableLiveData()
-    fun getLiveWeather(longitude:String,latitude:String){
+    fun getLiveWeather(token:String,longitude:String,latitude:String){
         viewModelScope.launch(IO) {
-            ServerAPI.getInstance().getLiveWeather(longitude,latitude).enqueue(object :Callback<BaseDataSimple<LiveWeatherDetail>>{
+            ServerAPI.getInstance().getLiveWeather(token,longitude,latitude).enqueue(object :Callback<BaseDataSimple<LiveWeatherDetail>>{
                 override fun onResponse(
                     call: Call<BaseDataSimple<LiveWeatherDetail>>,
                     response: Response<BaseDataSimple<LiveWeatherDetail>>
@@ -37,20 +39,19 @@ class WeatherInfoViewModel:ViewModel(){
                     loge("getLiveWeather onFailure ... ${t.message}")
                 }
             })
-
         }
     }
 
     //通过regionID去查询逐时天气
-    private fun getFuture24Weather(regionId:Int){
+    private fun getFuture24Weather(context:Context,regionId:Int){
         viewModelScope.launch(IO) {
-            ServerAPI.getInstance().getFuture24Weather("" + regionId).enqueue(object :Callback<BaseDataList<HourlyWeather>>{
+            ServerAPI.getInstance().getFuture24Weather(getToke(context),"" + regionId).enqueue(object :Callback<BaseDataList<HourlyWeather>>{
                 override fun onResponse(
                     call: Call<BaseDataList<HourlyWeather>>,
                     response: Response<BaseDataList<HourlyWeather>>
                 ) {
                     val hourlyWeather = response.body()?.data
-                    log("getFuture24Weather[$regionId] onResponse ...${hourlyWeather?.size}")
+                    log("getFuture24Weather[$regionId] onResponse ... ${response.body()?.message},${hourlyWeather?.size}")
                     hourlyWeather?.let {
                         future24Weather.postValue(hourlyWeather)
                     }
@@ -62,7 +63,7 @@ class WeatherInfoViewModel:ViewModel(){
         }
     }
 
-    fun getFuture24Weather(location:BDLocation?,dao:WeatherDao){
+    fun getFuture24Weather(context: Context,location:BDLocation?,dao:WeatherDao){
         viewModelScope.launch(IO) {
             var regionId = 0
             var level = 0;
@@ -82,16 +83,16 @@ class WeatherInfoViewModel:ViewModel(){
                     }else{
                         log("[${location.city}] 的regionId == $regionId" )
                     }
-                    getFuture24Weather(regionId)
+                    getFuture24Weather(context,regionId)
                 }
             }
 
         }
     }
 
-    fun getAQI(longitude:String,latitude:String){
+    fun getAQI(context: Context,longitude:String,latitude:String){
         viewModelScope.launch(IO) {
-            ServerAPI.getInstance().getAqi(longitude,latitude).enqueue(object :Callback<BaseDataSimple<AQI>>{
+            ServerAPI.getInstance().getAqi(getToke(context),longitude,latitude).enqueue(object :Callback<BaseDataSimple<AQI>>{
                 override fun onResponse(
                     call: Call<BaseDataSimple<AQI>>,
                     response: Response<BaseDataSimple<AQI>>
@@ -108,9 +109,9 @@ class WeatherInfoViewModel:ViewModel(){
         }
     }
 
-    fun getWeatherRange(cityName:String){
+    fun getWeatherRange(context: Context,cityName:String){
         viewModelScope.launch(IO) {
-            ServerAPI.getInstance().getTempRang(cityName).enqueue(object :Callback<BaseDataList<Int>>{
+            ServerAPI.getInstance().getTempRang(getToke(context),cityName).enqueue(object :Callback<BaseDataList<Int>>{
                 override fun onResponse(
                     call: Call<BaseDataList<Int>>,
                     response: Response<BaseDataList<Int>>
