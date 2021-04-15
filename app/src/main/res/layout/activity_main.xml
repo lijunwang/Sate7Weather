@@ -14,42 +14,48 @@
             android:id="@+id/main_title_bar"
             layout="@layout/main_title_bar" />
         <!-- 当前天气概述 start-->
-        <TextView
-            android:id="@+id/main_current_temperature"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/currentContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="50dp"
-            android:text="20"
-            android:textColor="@color/colorWhite0"
-            android:textSize="100sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/main_title_bar"
-            tools:text="20" />
+            app:layout_constraintTop_toBottomOf="@id/main_title_bar">
+            <TextView
+                android:id="@+id/main_current_temperature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="20"
+                android:textColor="@color/colorWhite0"
+                android:textSize="90sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="20" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="°C"
-            android:textColor="@color/colorWhite0"
-            android:textSize="55sp"
-            app:layout_constraintLeft_toRightOf="@id/main_current_temperature"
-            app:layout_constraintTop_toTopOf="@id/main_current_temperature"
-            tools:text="°C" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="°C"
+                android:textColor="@color/colorWhite0"
+                android:textSize="50sp"
+                app:layout_constraintLeft_toRightOf="@id/main_current_temperature"
+                app:layout_constraintTop_toTopOf="@id/main_current_temperature"
+                tools:text="°C" />
 
-        <TextView
-            android:id="@+id/main_current_temperature_sensible"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/btn_sensible_temp"
-            android:text="体感:15°C"
-            android:textColor="@color/colorWhite0"
-            android:textSize="16sp"
-            app:layout_constraintBaseline_toBaselineOf="@id/main_current_temperature"
-            app:layout_constraintLeft_toRightOf="@id/main_current_temperature"
-            tools:text="体感温度:15°C" />
+            <TextView
+                android:id="@+id/main_current_temperature_sensible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/btn_sensible_temp"
+                android:text="体感:15°C"
+                android:textColor="@color/colorWhite0"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toRightOf="@id/main_current_temperature"
+                app:layout_constraintBaseline_toBaselineOf="@id/main_current_temperature"
+                tools:text="体感温度:15°C" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
         <!-- 天气 -> 气温范围  -->
         <TextView
             android:id="@+id/main_current_date"
@@ -60,7 +66,7 @@
             android:gravity="center"
             android:textColor="@color/colorWhite0"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/main_current_temperature"
+            app:layout_constraintTop_toBottomOf="@id/currentContainer"
             tools:text="10月23日星期五" />
 
         <TextView
@@ -91,6 +97,27 @@
             app:layout_constraintBottom_toBottomOf="@id/main_current_date"
             app:layout_constraintLeft_toLeftOf="parent" />
         <!-- 天气 湿度信息 -->
+        <FrameLayout
+            android:id="@+id/liveDataContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/btn_main_temp_info"
+            android:layout_marginLeft="@dimen/title_bar_margin_left"
+            android:layout_marginRight="@dimen/title_bar_margin_right"
+            app:layout_constraintTop_toBottomOf="@id/main_current_date">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/liveDataRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="4"
+                android:layout_marginBottom="25dp"
+                app:layout_constraintTop_toBottomOf="@id/main_current_date"/>
+        </FrameLayout>
+
         <LinearLayout
             android:id="@+id/main_wet_container"
             android:layout_width="match_parent"
@@ -102,6 +129,7 @@
             android:orientation="horizontal"
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
+            android:visibility="gone"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/main_current_date">
 
@@ -154,16 +182,19 @@
             android:background="@drawable/btn_main_temp_info"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/main_future_notice"
-            app:layout_constraintTop_toBottomOf="@id/main_wet_container">
+            app:layout_constraintTop_toBottomOf="@id/liveDataContainer">
 
             <TextView
                 style="@style/Text_Wrap_Wrap_White_Center"
+                android:layout_width="match_parent"
+                android:gravity="center"
                 android:text="今日天气变化预览" />
 
             <TableRow>
 
                 <TextView
                     style="@style/Text_Wrap_Wrap_White_Center"
+                    android:layout_marginLeft="8dp"
                     android:text="2小时" />
 
                 <TextView
@@ -176,6 +207,7 @@
                 <ImageView
                     android:id="@+id/hourly2_weather_type"
                     style="@style/ImageViewBase"
+                    android:layout_marginRight="8dp"
                     android:src="@drawable/weather_icon_sunny" />
             </TableRow>
 
@@ -183,6 +215,7 @@
 
                 <TextView
                     style="@style/Text_Wrap_Wrap_White_Center"
+                    android:layout_marginLeft="8dp"
                     android:text="12小时" />
 
                 <TextView
@@ -195,6 +228,7 @@
                 <ImageView
                     android:id="@+id/hourly12_weather_type"
                     style="@style/ImageViewBase"
+                    android:layout_marginRight="8dp"
                     android:src="@drawable/weather_icon_sunny" />
             </TableRow>
 
@@ -202,6 +236,7 @@
 
                 <TextView
                     style="@style/Text_Wrap_Wrap_White_Center"
+                    android:layout_marginLeft="8dp"
                     android:text="24小时" />
 
                 <TextView
@@ -214,6 +249,7 @@
                 <ImageView
                     android:id="@+id/hourly24_weather_type"
                     style="@style/ImageViewBase"
+                    android:layout_marginRight="8dp"
                     android:src="@drawable/weather_icon_tornado" />
             </TableRow>
         </TableLayout>
@@ -251,6 +287,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorBlue"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 android:text="24小时天气变化" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -269,9 +310,9 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="@dimen/title_bar_margin_right"
             android:background="@drawable/btn_main_24_forecast_bg"
-            android:paddingTop="30dp"
-            android:paddingBottom="30dp"
-            android:layout_marginBottom="30dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:layout_marginBottom="130dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/future_24_container">
 
@@ -352,6 +393,10 @@
                     android:text="@string/main_save" />
             </TableRow>
         </TableLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_content"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </ScrollView>
